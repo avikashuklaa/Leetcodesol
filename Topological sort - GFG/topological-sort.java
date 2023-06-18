@@ -64,33 +64,59 @@ class Solution
     static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
     {
         // add your code here
-        boolean[] vis = new boolean[V];
-        Stack<Integer> st = new Stack<>();
         
-        for(int i=0; i<V; i++){
-            if(vis[i] != true){
-                dfs(adj, i, vis, st);
+        int[] deg = new int[V];
+        
+        for(ArrayList<Integer> temp : adj){
+            for(Integer e : temp){
+                deg[e]++;
             }
         }
+        ArrayList<Integer> ans = new ArrayList<>();
         
+        bfs(adj, deg, ans, V);
         int i=0;
-        int[] arr = new int[V];
-        while(!st.empty()){
-            arr[i++]=st.pop();
+        int[] anss = new int[V];
+        for(int e : ans){
+            anss[i++]=e;
         }
         
-        return arr;
+        return anss;
+        
        
     }
     
-    public static void dfs(ArrayList<ArrayList<Integer>> adj, int v, boolean[] vis, Stack<Integer> st){
-        vis[v]=true;
+    public static void bfs(ArrayList<ArrayList<Integer>> adj, int[] deg, ArrayList<Integer> ans, int V){
         
-        for(Integer nbr : adj.get(v)){
-            if(vis[nbr] != true){
-                dfs(adj, nbr, vis, st);
+        Queue<Integer> q = new ArrayDeque<>();
+        
+        for(int i=0; i<V; i++){
+            if(deg[i]==0){
+                q.add(i);
             }
         }
-        st.push(v);
+        
+        while(q.size()>0){
+            int temp = q.poll();
+            ans.add(temp);
+            
+            for(int nbr : adj.get(temp)){
+                if(--deg[nbr]==0){
+                    q.add(nbr);
+                }
+            }
+            
+        }
     }
+    
+    // public static void dfs(ArrayList<ArrayList<Integer>> adj, int v, boolean[] vis, Stack<Integer> st){
+    //     vis[v]=true;
+        
+    //     for(Integer nbr : adj.get(v)){
+    //         if(vis[nbr] != true){
+    //             dfs(adj, nbr, vis, st);
+    //         }
+    //     }
+    //     st.push(v);
+    // }
 }
