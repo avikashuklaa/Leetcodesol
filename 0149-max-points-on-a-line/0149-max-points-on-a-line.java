@@ -1,15 +1,15 @@
 class Solution {
     public int maxPoints(int[][] points) {
         
-        if(points.length<=0){
-            return 0;
-        }
-        if(points.length<=2){
+       if(points.length <= 0){
+           return 0;
+       }
+        if(points.length <= 2){
             return points.length;
         }
         
+        int max = 0;
         
-        int max=0;
         for(int[] point1 : points){
             
             Map<Double, Integer> map = new HashMap<>();
@@ -19,24 +19,24 @@ class Solution {
                 if(point1 == point2){
                     continue;
                 }
-                double slope=0;
                 
-                if(point1[0]==point2[0]){
+                double slope = 0;
+                
+                if(point1[0] == point2[0]){
                     slope = Double.POSITIVE_INFINITY;
                 }
                 else{
-                    slope = ((point2[1]-point1[1])/(double)(point2[0]-point1[0]));
+                    slope = ((point2[1] - point1[1])/(double)(point2[0] - point1[0]));
                 }
                 
                 map.put(slope, map.getOrDefault(slope, 0) + 1);
                 
                 if(map.get(slope) > max){
-                    max=map.get(slope);
+                    max = map.get(slope);
                 }
-                
             }
         }
         
-        return max+1;
+        return max + 1;
     }
 }
