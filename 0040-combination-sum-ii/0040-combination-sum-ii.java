@@ -23,9 +23,9 @@ class Solution {
                 if(i > start && nums[i] == nums[i-1]){
                     continue;
                 }
-                if(target < nums[i]){
-                    break;
-                }
+                // if(target < nums[i]){
+                //     break;
+                // }
                 curr.add(nums[i]);
                 find(ans, curr, nums, target - nums[i], i+1);
                 curr.remove(curr.size() - 1);
