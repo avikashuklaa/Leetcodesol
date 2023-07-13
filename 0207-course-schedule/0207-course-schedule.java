@@ -5,16 +5,16 @@ class Solution {
     
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         
-        adj=new ArrayList[numCourses];
+        adj = new ArrayList[numCourses];
         
         for(int i=0; i<numCourses; i++){
-            adj[i]= new ArrayList<>();
+            adj[i]=new ArrayList<>();
         }
         
         visited = new boolean[numCourses];
         marked = new boolean[numCourses];
         
-        for(int i=0; i< prerequisites.length; i++){
+        for(int i=0; i<prerequisites.length; i++){
             adj[prerequisites[i][0]].add(prerequisites[i][1]);
         }
         
@@ -25,25 +25,24 @@ class Solution {
                 }
             }
         }
-        
         return true;
         
     }
     
-    boolean isCyclic(int i){
-        visited[i]=true;
-        for(int j : adj[i]){
-            if(!visited[j]){
-                if(isCyclic(j)){
+    public boolean isCyclic(int j){
+        visited[j]=true;
+        
+        for(int ele : adj[j]){
+            if(!visited[ele]){
+                if(isCyclic(ele)){
                     return true;
                 }
             }
-            else if(!marked[j]){
+            else if(!marked[ele]){
                 return true;
             }
-            
         }
-        marked[i]=true;
+        marked[j]=true;
         return false;
     }
 }
