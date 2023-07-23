@@ -4,26 +4,24 @@ class Solution {
         
         n = matrix.length;
         
-        
         Integer[][] dp = new Integer[n][n];
         
         int ans = Integer.MAX_VALUE;
         
         for(int i=0; i<n; i++){
-            ans = Math.min(ans, find(dp, 0, i, matrix));
+            ans = Math.min(ans, find(matrix, dp, 0, i));
         }
         
         return ans;
     }
     
-    public static int find(Integer[][] dp, int r, int c, int[][] matrix){
+    public static int find(int[][] matrix, Integer[][] dp, int r, int c){
         
         if(r<0 || r>=n || c<0 || c>=n){
             return Integer.MAX_VALUE;
-            
         }
         
-        if(r == n-1){
+        if(r==n-1){
             return matrix[r][c];
         }
         
@@ -31,14 +29,17 @@ class Solution {
             return dp[r][c];
         }
         
-        int bottom = find(dp, r+1, c, matrix);
-        int bleft = find(dp, r+1, c-1, matrix);
-        int bright = find(dp, r+1, c+1, matrix);
+        int b = find(matrix, dp, r+1, c);
+        int bl = find(matrix, dp, r+1, c-1);
+        int br = find(matrix, dp, r+1, c+1);
         
-        int min = Math.min(bottom, Math.min(bleft, bright));
+        int min = Math.min(b, Math.min(bl, br));
         
         dp[r][c] = matrix[r][c] + min;
         
         return dp[r][c];
+        
     }
+    
+    
 }
